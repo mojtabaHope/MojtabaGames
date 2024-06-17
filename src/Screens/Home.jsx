@@ -4,11 +4,6 @@ import IranMap from "./IranMap/IranMap";
 
 const Home = () => {
   const [currentProvince, setCurrentProvince] = useState(0);
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    level: 0,
-    score: 0,
-  });
 
   return (
     <>
