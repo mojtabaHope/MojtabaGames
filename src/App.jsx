@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import About from "./Screens/About/About";
 import DetailsPage from "./Screens/DetailsPage/DetailsPage";
@@ -9,8 +9,21 @@ import MyContext from "./core/Context/UserContext";
 
 function App() {
   const [user, setUser] = useState({ name: "", level: 0, score: 0 });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const updateUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
   return (
-    <MyContext.Provider value={{ user, setUser }}>
+    <MyContext.Provider value={{ user, setUser: updateUser }}>
       <Navlink />
       <Switch>
         <Route path="/detailsPage" component={DetailsPage} exact />
