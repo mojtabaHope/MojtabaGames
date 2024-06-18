@@ -1,32 +1,39 @@
 import React, { useState } from "react";
 import { notification, Button } from "antd";
 import OTPInput from "react-otp-input";
-import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
+import {
+  SmileOutlined,
+  FrownOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 
 const TextSection = ({ nameCurrect, nameOstan, onCorrectAnswer }) => {
   const [name, setName] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotification = (isCorrect) => {
+  const openNotification = (isCorrect, message) => {
     api.open({
-      message: isCorrect ? " درستههه" : " ریدی ",
-      description: isCorrect
-        ? "آفرین عزیزم حالا برو سوال بعدی"
-        : "اشکال نداره عزیزم دوباره امتحان کن",
+      message: isCorrect ? " درستههه" : " اشتباهه عزیزم ",
+      description: message,
       icon: isCorrect ? (
         <SmileOutlined style={{ color: "#108ee9" }} />
       ) : (
-        <FrownOutlined style={{ color: "#108ee9" }} />
+        <FrownOutlined style={{ color: "#ff4d4f" }} />
       ),
     });
   };
 
   const onClick = () => {
     if (name.length < nameCurrect.length) {
-      alert("کلمات به صورت کامل وارد کنید");
+      openNotification(false, "کلمات به صورت کامل وارد کنید");
     } else {
       const isCorrect = name === nameCurrect;
-      openNotification(isCorrect);
+      openNotification(
+        isCorrect,
+        isCorrect
+          ? "آفرین عزیزم حالا برو سوال بعدی"
+          : "اشکال نداره عزیزم دوباره امتحان کن"
+      );
       onCorrectAnswer(isCorrect);
       if (!isCorrect) setName("");
     }

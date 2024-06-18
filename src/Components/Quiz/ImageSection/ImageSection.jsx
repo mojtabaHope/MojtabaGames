@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Image } from "antd";
+import { Button, Image, notification } from "antd";
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons";
 
 const ImageSection = ({ imageCurrect, nameOstan, onCorrectAnswer }) => {
   const number = Number(imageCurrect.split(".")[0]);
@@ -10,14 +11,24 @@ const ImageSection = ({ imageCurrect, nameOstan, onCorrectAnswer }) => {
     randomNumber = Math.floor(Math.random() * 31) + 1;
   } while (randomNumber === number);
 
+  const openNotification = (isCorrect) => {
+    notification.open({
+      message: isCorrect ? "آفرییییننن!" : " اشباه!عزیزم",
+      description: isCorrect
+        ? "حالا برو استان بعدی"
+        : "دوباره امتخان کن عزیزم!",
+      icon: isCorrect ? (
+        <SmileOutlined style={{ color: "#108ee9" }} />
+      ) : (
+        <FrownOutlined style={{ color: "#ff4d4f" }} />
+      ),
+    });
+  };
+
   const handleClick = (divNumber) => {
-    if (divNumber === number) {
-      alert("درستههه");
-      onCorrectAnswer(true);
-    } else {
-      alert("اشتباههه");
-      onCorrectAnswer(false);
-    }
+    const isCorrect = divNumber === number;
+    openNotification(isCorrect);
+    onCorrectAnswer(isCorrect);
   };
 
   const Datas = [
