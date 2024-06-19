@@ -6,6 +6,7 @@ import Home from "./Screens/Home";
 import Navlink from "./Screens/Navlink/Navlink";
 import Tomar from "./Screens/Tomar/Tomar";
 import MyContext from "./core/Context/UserContext";
+import MobileWarning from "./Components/MobileWarning/MobileWarning";
 
 function App() {
   const [user, setUser] = useState({ name: "", level: 0, score: 0 });
@@ -25,6 +26,7 @@ function App() {
   return (
     <MyContext.Provider value={{ user, setUser: updateUser }}>
       <Navlink />
+      <MobileWarning />
       <Switch>
         <Route path="/detailsPage" component={DetailsPage} exact />
         <Route path="/Home" component={Home} exact />
